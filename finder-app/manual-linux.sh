@@ -79,15 +79,19 @@ ${CROSS_COMPILE}readelf -a bin/busybox | grep "program interpreter"
 ${CROSS_COMPILE}readelf -a bin/busybox | grep "Shared library"
 
 # TODO: Add library dependencies to rootfs
-cp ${OUTDIR}/linux-stable/arch/${ARCH}/lib/*  ${OUTDIR}/rootfs/lib64
+cp ${OUTDIR}/linux-stable/arch/${ARCH}/lib/*  ${OUTDIR}/rootfs/lib
 #cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib/ld-linux-aarch64.so.1 ${OUTDIR}/rootfs/lib
-cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/ld-2.31.so ${OUTDIR}/rootfs/lib/ld-linux-aarch64.so.1
+#cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/ld-2.31.so ${OUTDIR}/rootfs/lib/ld-linux-aarch64.so.1
+cp /usr/aarch64-linux-gnu/lib/ld-2.31.so ${OUTDIR}/rootfs/lib64/ld-linux-aarch64.so.1
 #cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/libm.so.6 ${OUTDIR}/rootfs/lib64
-cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/libm-2.31.so ${OUTDIR}/rootfs/lib64/libm.so.6
+#cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/libm-2.31.so ${OUTDIR}/rootfs/lib64/libm.so.6
+cp /usr/aarch64-linux-gnu/lib/libm-2.31.so ${OUTDIR}/rootfs/lib64/libm.so.6
 #cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/libresolv.so.2 ${OUTDIR}/rootfs/lib64
-cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/libresolv-2.31.so* ${OUTDIR}/rootfs/lib64/libresolv.so.2
+#cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/libresolv-2.31.so* ${OUTDIR}/rootfs/lib64/libresolv.so.2
+cp /usr/aarch64-linux-gnu/lib/libresolv-2.31.so* ${OUTDIR}/rootfs/lib64/libresolv.so.2
 #cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/libc.so.6 ${OUTDIR}/rootfs/lib64
-cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/libc-2.31.so* ${OUTDIR}/rootfs/lib64/libc.so.6
+#cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/libc-2.31.so* ${OUTDIR}/rootfs/lib64/libc.so.6
+cp /usr/aarch64-linux-gnu/lib/libc-2.31.so*  ${OUTDIR}/rootfs/lib64/libc.so.6
 # Copy the sh binary to the root filesystem
 cp ${OUTDIR}/busybox/_install/bin/* ${OUTDIR}/rootfs/bin/
 cp ${OUTDIR}/busybox/_install/bin/sh ${OUTDIR}/rootfs/bin/
