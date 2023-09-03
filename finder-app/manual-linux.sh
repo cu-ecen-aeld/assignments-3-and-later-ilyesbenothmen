@@ -35,6 +35,7 @@ if [ ! -e ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ]; then
     git checkout ${KERNEL_VERSION}
 
     # TODO: Add your kernel build steps here
+    make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} mrproper
     make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} defconfig
     make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} -j$(nproc) Image dtbs modules
 #    make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} modules_install INSTALL_MOD_PATH=${OUTDIR}/rootfs
@@ -63,6 +64,7 @@ git clone git://busybox.net/busybox.git
     cd busybox
     git checkout ${BUSYBOX_VERSION}
     # TODO:  Configure busybox
+    make ARCH=arm64 CROSS_COMPILE=${CROSS_COMPILE} distclean
     make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} defconfig
 else
     cd busybox
@@ -70,7 +72,7 @@ fi
 
 # TODO: Make and install busybox
  make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} -j$(nproc) all
- make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} -j$(nproc) install
+ make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} -j$(nproc) CONFIG_PREFIX=${OUTDIR}/rootfs install
  
 # chmod +s ${OUTDIR}/busybox 
 cd ${OUTDIR}/busybox/_install/
@@ -112,7 +114,7 @@ make  ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE}
 echo "________________"
 cp ${FINDER_APP_DIR}/finder.sh ${OUTDIR}/rootfs/home
 cp ${FINDER_APP_DIR}/writer ${OUTDIR}/rootfs/home
-cp ${FINDER_APP_DIR}/conf/username.txt ${OUTDIR}/rootfs/home/conf
+cp ${FINDER_APP_DIR}/conf/* ${OUTDIR}/rootfs/home/conf
 cp ${FINDER_APP_DIR}/finder-test.sh ${OUTDIR}/rootfs/home
 cp ${FINDER_APP_DIR}/autorun-qemu.sh ${OUTDIR}/rootfs/home
 # TODO: Chown the root directory
