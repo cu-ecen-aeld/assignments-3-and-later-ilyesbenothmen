@@ -114,7 +114,7 @@ make  ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE}
 echo "________________"
 cp ${FINDER_APP_DIR}/finder.sh ${OUTDIR}/rootfs/home
 cp ${FINDER_APP_DIR}/writer ${OUTDIR}/rootfs/home
-cp ${FINDER_APP_DIR}/conf/* ${OUTDIR}/rootfs/home/conf
+cp ${FINDER_APP_DIR}/../conf/* ${OUTDIR}/rootfs/home/conf
 cp ${FINDER_APP_DIR}/finder-test.sh ${OUTDIR}/rootfs/home
 cp ${FINDER_APP_DIR}/autorun-qemu.sh ${OUTDIR}/rootfs/home
 # TODO: Chown the root directory
