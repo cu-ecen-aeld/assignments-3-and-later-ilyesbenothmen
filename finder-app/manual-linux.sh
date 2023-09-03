@@ -75,29 +75,32 @@ fi
  make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} -j$(nproc) CONFIG_PREFIX=${OUTDIR}/rootfs install
  
 # chmod +s ${OUTDIR}/busybox 
-cd ${OUTDIR}/busybox/_install/
+cd ${OUTDIR}/rootfs
 echo "Library dependencies"
 ${CROSS_COMPILE}readelf -a bin/busybox | grep "program interpreter"
 ${CROSS_COMPILE}readelf -a bin/busybox | grep "Shared library"
 
 # TODO: Add library dependencies to rootfs
-cp ${OUTDIR}/linux-stable/arch/${ARCH}/lib/*  ${OUTDIR}/rootfs/lib
+#cp ${OUTDIR}/linux-stable/arch/${ARCH}/lib/*  ${OUTDIR}/rootfs/lib
 #cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib/ld-linux-aarch64.so.1 ${OUTDIR}/rootfs/lib
 #cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/ld-2.31.so ${OUTDIR}/rootfs/lib/ld-linux-aarch64.so.1
-cp /usr/aarch64-linux-gnu/lib/ld-2.31.so ${OUTDIR}/rootfs/lib64/ld-linux-aarch64.so.1
+#cp /usr/aarch64-linux-gnu/lib/ld-2.31.so ${OUTDIR}/rootfs/lib64/ld-linux-aarch64.so.1
 #cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/libm.so.6 ${OUTDIR}/rootfs/lib64
 #cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/libm-2.31.so ${OUTDIR}/rootfs/lib64/libm.so.6
-cp /usr/aarch64-linux-gnu/lib/libm-2.31.so ${OUTDIR}/rootfs/lib64/libm.so.6
+#cp /usr/aarch64-linux-gnu/lib/libm-2.31.so ${OUTDIR}/rootfs/lib64/libm.so.6
 #cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/libresolv.so.2 ${OUTDIR}/rootfs/lib64
 #cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/libresolv-2.31.so* ${OUTDIR}/rootfs/lib64/libresolv.so.2
-cp /usr/aarch64-linux-gnu/lib/libresolv-2.31.so* ${OUTDIR}/rootfs/lib64/libresolv.so.2
+#cp /usr/aarch64-linux-gnu/lib/libresolv-2.31.so* ${OUTDIR}/rootfs/lib64/libresolv.so.2
 #cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/libc.so.6 ${OUTDIR}/rootfs/lib64
 #cp /home/linux/arm/gcc-arm-10.2-2020.11-x86_64-aarch64-none-linux-gnu/aarch64-none-linux-gnu/libc/lib64/libc-2.31.so* ${OUTDIR}/rootfs/lib64/libc.so.6
-cp /usr/aarch64-linux-gnu/lib/libc-2.31.so*  ${OUTDIR}/rootfs/lib64/libc.so.6
+#cp /usr/aarch64-linux-gnu/lib/libc-2.31.so*  ${OUTDIR}/rootfs/lib64/libc.so.6
+SYSROOT=$(${CROSS_COMPILE}gcc --print-sysroot)
+sudo cp -a ${SYSROOT}/lib/* lib
+sudo cp -a ${SYSROOT}/lib64 .
 # Copy the sh binary to the root filesystem
-cp ${OUTDIR}/busybox/_install/bin/* ${OUTDIR}/rootfs/bin/
-cp ${OUTDIR}/busybox/_install/bin/sh ${OUTDIR}/rootfs/bin/
-cp ${OUTDIR}/busybox/_install/sbin/init ${OUTDIR}/rootfs/sbin/
+#cp ${OUTDIR}/busybox/_install/bin/* ${OUTDIR}/rootfs/bin/
+#cp ${OUTDIR}/busybox/_install/bin/sh ${OUTDIR}/rootfs/bin/
+#cp ${OUTDIR}/busybox/_install/sbin/init ${OUTDIR}/rootfs/sbin/
 # TODO: Make device nodes
 sudo mknod -m 666 ${OUTDIR}/rootfs/dev/null c 1 3
 sudo mknod -m 666 ${OUTDIR}/rootfs/dev/console c 5 1
